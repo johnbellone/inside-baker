@@ -1,0 +1,9 @@
+/bin
+/tmp
+/.vagrant
+/.bundle
+/vendor
+.env
+*.box
+*.ovf
+*.vtf
