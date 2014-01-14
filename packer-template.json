@@ -15,7 +15,8 @@
         {
             "type": "shell",
             "environment_vars": [
-                "http_proxy={{user `http_proxy`}}"
+                "http_proxy={{user `http_proxy`}}",
+                "https_proxy={{user `http_proxy`}}"
             ],
             "inline": [
                 "curl -skL https://getchef.com/chef/install.sh | sudo -E bash"
@@ -25,6 +26,7 @@
     "post-processors": [
         {
             "type": "vagrant",
+            "output": "builds/{{.BuildName}}-{{.Provider}}-centos-6.5-x86_64.box",
             "vagrantfile_template": "Vagrantfile",
             "include": [ ".env" ]
         }
