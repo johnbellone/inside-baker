@@ -10,7 +10,7 @@ Vagrant.require_plugin 'vagrant-dnsmasq' if boxen?
 # Inject variables from .env into the environment. This takes advantage
 # of the vagrant-proxyconf plugin which handles it in guest machines.
 require 'dotenv'
-Dotenv.load
+Dotenv.load(File.expand_path('../.env', __FILE__))
 
 Vagrant.configure('2') do |config|
   config.berkshelf.enabled = true
