@@ -8,6 +8,10 @@ rescue LoadError
   abort "Failed loading environment: #{default_environment}"
 end if File.exists?(default_environment)
 
+# Identify if the host machine has been setup with Boxen configuration. This
+# has a separate place where the dnsmasq configuration files live.
+def boxen?; ENV.include?('BOXEN_CONFIG_DIR'); end
+
 # Specify default configuration for common plugins that may be used.
 Vagrant.configure('2') do |config|
   config.berkshelf.enabled = true if Vagrant.has_plugin?('vagrant-berkshelf')
