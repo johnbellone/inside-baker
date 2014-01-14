@@ -5,13 +5,20 @@
             "source_path": "{{user `virtualbox_source_path`}}",
             "ssh_username": "vagrant",
             "ssh_password": "vagrant",
-            "ssh_port": 22,
             "ssh_wait_timeout": "360s",
             "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
             "virtualbox_version_file": ".vbox_version"
+        },
+        {
+            "type": "vmware-ovf",
+            "source_path": "{{user `vmware_source_path`}}",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_wait_timeout": "360s",
+            "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now"
         }
     ],
-    "provisioners": [
+    "Provisioners": [
         {
             "type": "shell",
             "environment_vars": [
