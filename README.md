@@ -1,7 +1,7 @@
-Inside Chef
-===========
+Inside Baker
+============
 
-A set of tools to cook enterprise disk images using [Vagrant][1], [Packer][2]
+A set of tools to bake enterprise disk images using [Vagrant][1], [Packer][2]
 and [Chef][3].
 
 The enterprise environment often has different limitations than a public or
