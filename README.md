@@ -1,7 +1,7 @@
 Inside Baker
 ============
 
-A set of tools to bake enterprise disk images using [Vagrant][1], [Packer][2]
+Simple tool to bake enterprise disk images using [Vagrant][1], [Packer][2]
 and [Chef][3].
 
 The enterprise environment often has different limitations than a public or
@@ -10,8 +10,13 @@ due to security restrictions, corporate firewalls and proxies which cause
 invalid SSL certificates.
 
 Building a initial disk image which can be used with [Vagrant][1] allows for a
-development team to prepare the environment as necessary and distribute it to
-the team.
+development team to prepare the environment as necessary and distribute quickly
+and easily over [Amazon S3][5] or any other means.
+
+## Boxen Support
+Using the [Boxen][6] framework for configuring your development Mac we take
+advantage of the Vagrant plugins for automatically adding the virtual machines
+to the .dev domain using the [dnsmasq Vagrant plugin][7].
 
 ## Requirements
 * [VirtualBox 1.4.2 or newer][1]
@@ -30,3 +35,6 @@ the team.
 [2]: http://packer.io
 [3]: http://getchef.com
 [4]: http://vmware.com
+[5]: http://aws.amazon.com
+[6]: http://boxen.github.com
+[7]: https://github.com/mattes/vagrant-dnsmasq
