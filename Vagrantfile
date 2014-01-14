@@ -1,4 +1,3 @@
-# coding: utf-8
 # If this is running in a environment which was bootstrapped using Boxen
 # we want to make sure that we setup dnsmasq and the proper configuration.
 def boxen?; ENV.include?('BOXEN_CONFIG_DIR'); end
