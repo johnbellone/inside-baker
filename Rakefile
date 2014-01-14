@@ -14,14 +14,16 @@ VAGRANT_NO_PROXY=localhost,127.0.0.1,.dev,$NO_PROXY
 EOF
   end
 
-  virtualbox_path = File.join(Dir.home, '.vagrant.d/boxes/opscode-centos-6.5/virtualbox')
-  vmware_path = File.join(Dir.home, '.vagrant.d/boxes/opscode-centos-6.5/vmware')
+  # TODO: Support more than just the standard Opscode Bento boxes.
+  boxes_path = File.join(Dir.home, '.vagrant.d/boxes')
+  virtualbox_path = File.join(boxes_path, 'opscode-ubuntu-12.04/virtualbox/box.ovf')
+  vmware_path = Dir.glob(File.join(boxes_path, 'opscode-ubuntu-12.04/vmware_desktop/*.vmx')).first.chomp
 
   File.open('tmp/variables.json', 'w') do |file|
     file.write(<<-EOF)
 {
-        "virtualbox_source_path": "#{virtualbox_path}/box.ovf",
-        "vmware_source_path": "#{vmware_path}/box.vtf"
+        "virtualbox_source_path": "#{virtualbox_path}",
+        "vmware_source_path": "#{vmware_path}"
 }
 EOF
   end
