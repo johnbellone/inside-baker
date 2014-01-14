@@ -1,0 +1,53 @@
+{
+    "builders": [
+        {
+            "name": "virtualbox-centos-6.5-x86_64",
+            "type": "virtualbox-ovf",
+            "output_directory": "packer_cache/virtualbox",
+            "source_path": "{{user `virtualbox_centos_path`}}",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_wait_timeout": "360s",
+            "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+            "virtualbox_version_file": ".vbox_version"
+        },
+        {
+            "name": "vmware-centos-6.5-x86_64",
+            "type": "vmware-vmx",
+            "output_directory": "packer_cache/vmware",
+            "source_path": "{{user `vmware_centos_path`}}",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_wait_timeout": "360s",
+            "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "environment_vars": [
+                "http_proxy={{user `http_proxy`}}",
+                "https_proxy={{user `http_proxy`}}"
+            ],
+            "inline": [
+                "curl -skL https://getchef.com/chef/install.sh | sudo -E bash"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "compression_level": 1,
+            "output": "builds/{{.BuildName}}.box",
+            "vagrantfile_template": "Vagrantfile",
+            "include": [ ".env" ]
+        }
+    ],
+    "variables": {
+        "virtualbox_centos_path": "",
+        "virtualbox_ubuntu_path": "",
+        "vmware_centos_path": "",
+        "vmware_ubuntu_path": "",
+        "http_proxy": "{{env `http_proxy`}}"
+    }
+}

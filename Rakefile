@@ -16,8 +16,8 @@ EOF
 
   # TODO: Support more than just the standard Opscode Bento boxes.
   boxes_path = File.join(Dir.home, '.vagrant.d/boxes')
-  virtualbox_path = File.join(boxes_path, 'opscode-ubuntu-12.04/virtualbox/box.ovf')
-  vmware_path = Dir.glob(File.join(boxes_path, 'opscode-ubuntu-12.04/vmware_desktop/*.vmx')).first.chomp
+  virtualbox_path = File.join(boxes_path, 'opscode-centos-6.5/virtualbox/box.ovf')
+  vmware_path = Dir.glob(File.join(boxes_path, 'opscode-centos-6.5/vmware_desktop/*.vmx')).first.chomp
 
   File.open('tmp/variables.json', 'w') do |file|
     file.write(<<-EOF)

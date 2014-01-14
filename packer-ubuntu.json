@@ -1,9 +1,10 @@
 {
     "builders": [
         {
+            "name": "virtualbox-ubuntu-12.04-amd64",
             "type": "virtualbox-ovf",
             "output_directory": "packer_cache/virtualbox",
-            "source_path": "{{user `virtualbox_source_path`}}",
+            "source_path": "{{user `virtualbox_ubuntu_path`}}",
             "ssh_username": "vagrant",
             "ssh_password": "vagrant",
             "ssh_wait_timeout": "360s",
@@ -11,9 +12,10 @@
             "virtualbox_version_file": ".vbox_version"
         },
         {
+            "name": "vmware-ubuntu-12.04-amd64",
             "type": "vmware-vmx",
             "output_directory": "packer_cache/vmware",
-            "source_path": "{{user `vmware_source_path`}}",
+            "source_path": "{{user `vmware_ubuntu_path`}}",
             "ssh_username": "vagrant",
             "ssh_password": "vagrant",
             "ssh_wait_timeout": "360s",
@@ -35,14 +37,17 @@
     "post-processors": [
         {
             "type": "vagrant",
-            "output": "builds/{{.Provider}}-centos-6.5-x86_64.box",
+            "compression_level": 1,
+            "output": "builds/{{.BuildName}}_{{.Provider}}.box",
             "vagrantfile_template": "Vagrantfile",
             "include": [ ".env" ]
         }
     ],
     "variables": {
-        "virtualbox_source_path": "",
-        "vmware_source_path": "",
+        "virtualbox_centos_path": "",
+        "virtualbox_ubuntu_path": "",
+        "vmware_centos_path": "",
+        "vmware_ubuntu_path": "",
         "http_proxy": "{{env `http_proxy`}}"
     }
 }
