@@ -3,6 +3,8 @@
 /.vagrant
 /.bundle
 /vendor
+/packer_cache
+/builds
 .env
 *.box
 *.ovf
