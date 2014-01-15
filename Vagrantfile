@@ -25,7 +25,7 @@ Vagrant.configure('2') do |config|
   # Automatically add the virtual machine to the local dnsmasq daemon if it
   # and the plugin have been installed. 
   if Vagrant.has_plugin?('vagrant-dnsmasq')
-    config.dnsmasq.domain = '.dev'
+    config.dnsmasq.domain = '.vm'
     config.dnsmasq.dnsmasqconf = File.join(ENV['BOXEN_CONFIG_DIR'], '/dnsmasq/dnsmasq.conf') if boxen?
   end
 end
