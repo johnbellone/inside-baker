@@ -1,0 +1,20 @@
+---
+opscode-ubuntu-6.5:
+  files:
+    - vagrant: 'templates/Vagrantfile'
+    - environment: 'templates/environment'
+  sources:
+    - vmware: 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/vmware/opscode_ubuntu-12.04_chef-provisionerless.box'
+    - virtualbox: 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box'
+  omnibus: 
+    - chef: latest
+
+opscode-centos-6.5:
+  files:
+    - vagrant: 'templates/Vagrantfile'
+    - environment: 'templates/environment'
+  sources:
+    - vmware: 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/vmware/opscode_centos-6.5_chef-provisionerless.box'
+    - virtualbox: 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box'
+  omnibus: 
+    - chef: latest

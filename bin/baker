@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path('../../lib', __FILE__)
+
+require 'inside_baker'
+require 'thor'
+
+class CLI < Thor
+  def config
+    
+  end
+
+  def build
+  end
+end
+
+CLI.start
+
+
+
+

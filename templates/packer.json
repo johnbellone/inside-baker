@@ -1,0 +1,102 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox-ovf",
+            "name": "virtualbox-centos-6.5-x86_64",
+            "vm_name": "virtualbox-centos-6.5-x86_64",
+            "output_directory": "tmp/{{.Name}}",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_wait_timeout": "720s",
+            "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+            "virtualbox_version_file": ".vbox_version",
+            "vboxmanage": [
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--memory",
+                    "480",
+                    "--cpus",
+                    "2"
+                ]
+            ],
+            "guest_os_type": "RedHat_64"
+        },
+        {
+            "type": "vmware-vmf",
+            "vm_name": "vmware-centos-6.5-x86_64",
+            "name": "vmware-centos-6.5-x86_64",
+            "output_directory": "tmp/{{.Name}}",
+            "guest_os_type": "centos-64",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_wait_timeout": "720s",
+            "vmx_data": {
+                "cpuid.coresPerSocket": "1",
+                "memsize": "480",
+                "numvcpus": "2"
+            }
+        },
+        {
+            "type": "virtualbox-ovf",
+            "vm_name": "virtualbox-ubuntu-12.04-amd64",
+            "name": "virtualbox-ubuntu-12.04-amd64",
+            "output_directory": "tmp/{{.Name}}",
+            "guest_os_type": "Ubuntu_64",
+            "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+            "ssh_password": "vagrant",
+            "ssh_username": "vagrant",
+            "ssh_wait_timeout": "720s",
+            "vboxmanage": [
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--memory",
+                    "384",
+                    "--cpus",
+                    "2"
+                ]
+            ]
+        },
+        {
+            "type": "vmware-vtf",
+            "vm_name": "vmware-ubuntu-12.04-amd64",
+            "name": "vmware-ubuntu-12.04-amd64",
+            "output_directory": "tmp/{{.Name}}",
+            "guest_os_type": "ubuntu-64",
+            "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+            "ssh_password": "vagrant",
+            "ssh_username": "vagrant",
+            "ssh_wait_timeout": "720s",
+            "vmx_data": {
+                "cpuid.coresPerSocket": "1",
+                "memsize": "384",
+                "numvcpus": "2"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "environment_vars": [
+                "http_proxy={{user `http_proxy`}}",
+                "https_proxy={{user `http_proxy`}}"
+            ],
+            "inline": [
+                "curl -skL https://getchef.com/chef/install.sh | sudo -E bash"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "compression_level": 1,
+            "output": "builds/{{.BuildName}}.box",
+            "vagrantfile_template": "Vagrantfile",
+            "include": [ ".env" ]
+        }
+    ],
+    "variables": {
+        "http_proxy": "{{env `http_proxy`}}"
+    }
+}

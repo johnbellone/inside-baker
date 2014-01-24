@@ -5,27 +5,28 @@ begin
   require 'dotenv'
   Dotenv.load(default_environment)
 rescue LoadError 
-  abort "Failed loading environment: #{default_environment}"
-end if File.exists?(default_environment)
+  abort <<-EOF
+Failed attempting to load `dotenv` gem from within Vagrant.
 
-# Identify if the host machine has been setup with Boxen configuration. This
-# has a separate place where the dnsmasq configuration files live.
-def boxen?; ENV.include?('BOXEN_CONFIG_DIR'); end
+Please install this explicitly by running:
+        $ vagrant plugin install dotenv
+EOF
+end if File.exists?(default_environment)
 
 # Specify default configuration for common plugins that may be used.
 Vagrant.configure('2') do |config|
-  config.berkshelf.enabled = true if Vagrant.has_plugin?('vagrant-berkshelf')
-  config.proxy.enabled = true if Vagrant.has_plugin?('vagrant-proxyconf')
+  if Vagrant.has_plugin?('vagrant-berkshelf')
+    config.berkshelf.enabled = true
+    config.berkshelf.client_key = File.join(Dir.home, '.chef/client.pem')
+  end
 
+  if Vagrant.has_plugin?('vagrant-proxyconf')
+    config.proxy.enabled = ENV.fetch('HTTP_PROXY', false)
+  end
+  
   if Vagrant.has_plugin?('vagrant-butcher')
     config.butcher.enabled = true
     config.butcher.verify_ssl = false    
-  end
-
-  # Automatically add the virtual machine to the local dnsmasq daemon if it
-  # and the plugin have been installed. 
-  if Vagrant.has_plugin?('vagrant-dnsmasq')
-    config.dnsmasq.domain = '.vm'
-    config.dnsmasq.dnsmasqconf = File.join(ENV['BOXEN_CONFIG_DIR'], '/dnsmasq/dnsmasq.conf') if boxen?
+    config.butcher.proxy = ENV.fetch('HTTP_PROXY', nil)
   end
 end
